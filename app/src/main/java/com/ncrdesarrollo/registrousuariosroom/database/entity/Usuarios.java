@@ -1,4 +1,4 @@
-package com.ncrdesarrollo.registrousuariosroom;
+package com.ncrdesarrollo.registrousuariosroom.database.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

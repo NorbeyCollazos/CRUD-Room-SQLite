@@ -9,7 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import java.util.ArrayList;
+import com.ncrdesarrollo.registrousuariosroom.adapters.UsuariosAdapter;
+import com.ncrdesarrollo.registrousuariosroom.database.AppDatabase;
+import com.ncrdesarrollo.registrousuariosroom.database.entity.Usuarios;
+import com.ncrdesarrollo.registrousuariosroom.repository.UsuarioRepository;
+import com.ncrdesarrollo.registrousuariosroom.repository.UsuarioRepositoryImpl;
+
 import java.util.List;
 
 public class ListaUsuariosActivity extends AppCompatActivity {
@@ -23,10 +28,10 @@ public class ListaUsuariosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_usuarios);
 
-        AppDatabase db = Room.databaseBuilder(ListaUsuariosActivity.this,
-                AppDatabase.class, "dbusuarios").allowMainThreadQueries().build();
+        AppDatabase db = AppDatabase.getInstance(ListaUsuariosActivity.this);
+        UsuarioRepository repository = new UsuarioRepositoryImpl(db.usuariosDao());
 
-        arrayList = db.usuariosDao().getAll();
+        arrayList = repository.getAll();
 
         recycler = findViewById(R.id.recycler);
         recycler.setHasFixedSize(true);

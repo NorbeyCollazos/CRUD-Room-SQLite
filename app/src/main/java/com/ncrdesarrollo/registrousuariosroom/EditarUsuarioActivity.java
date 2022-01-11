@@ -5,11 +5,15 @@ import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.ncrdesarrollo.registrousuariosroom.database.AppDatabase;
+import com.ncrdesarrollo.registrousuariosroom.database.entity.Usuarios;
+import com.ncrdesarrollo.registrousuariosroom.repository.UsuarioRepository;
+import com.ncrdesarrollo.registrousuariosroom.repository.UsuarioRepositoryImpl;
 
 public class EditarUsuarioActivity extends AppCompatActivity {
 
@@ -48,16 +52,20 @@ public class EditarUsuarioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                    AppDatabase db = Room.databaseBuilder(EditarUsuarioActivity.this,
-                            AppDatabase.class, "dbusuarios").allowMainThreadQueries().build();
+                AppDatabase db = AppDatabase.getInstance(EditarUsuarioActivity.this);
+                UsuarioRepository repository = new UsuarioRepositoryImpl(db.usuariosDao());
+
+                    String snombre = etNombre.getText().toString();
+                    String sapellidos = etApellidos.getText().toString();
+                    String sdireccion = etDireccion.getText().toString();
 
                     Usuarios usuarios = new Usuarios();
                     usuarios.setId(id);
-                    usuarios.setNombre(nombre);
-                    usuarios.setApellidos(apellidos);
-                    usuarios.setDireccion(direccion);
+                    usuarios.setNombre(snombre);
+                    usuarios.setApellidos(sapellidos);
+                    usuarios.setDireccion(sdireccion);
 
-                    db.usuariosDao().updateUser(usuarios);
+                    repository.updateUsuario(usuarios);
 
                     Toast.makeText(EditarUsuarioActivity.this, "Se modificó el usuario", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(EditarUsuarioActivity.this, ListaUsuariosActivity.class);

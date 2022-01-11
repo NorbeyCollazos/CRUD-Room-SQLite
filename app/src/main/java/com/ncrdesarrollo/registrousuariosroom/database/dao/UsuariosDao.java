@@ -1,4 +1,4 @@
-package com.ncrdesarrollo.registrousuariosroom;
+package com.ncrdesarrollo.registrousuariosroom.database.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -7,7 +7,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import java.util.ArrayList;
+import com.ncrdesarrollo.registrousuariosroom.database.entity.Usuarios;
+
 import java.util.List;
 
 @Dao

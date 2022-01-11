@@ -1,4 +1,4 @@
-package com.ncrdesarrollo.registrousuariosroom;
+package com.ncrdesarrollo.registrousuariosroom.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.ncrdesarrollo.registrousuariosroom.R;
+import com.ncrdesarrollo.registrousuariosroom.database.entity.Usuarios;
+
 import java.util.List;
 
 public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.viewHolder> implements View.OnClickListener {

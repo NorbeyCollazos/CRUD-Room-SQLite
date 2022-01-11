@@ -11,6 +11,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.ncrdesarrollo.registrousuariosroom.database.AppDatabase;
+import com.ncrdesarrollo.registrousuariosroom.database.entity.Usuarios;
+import com.ncrdesarrollo.registrousuariosroom.repository.UsuarioRepository;
+import com.ncrdesarrollo.registrousuariosroom.repository.UsuarioRepositoryImpl;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,21 +37,21 @@ public class MainActivity extends AppCompatActivity {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppDatabase db = Room.databaseBuilder(MainActivity.this,
-                        AppDatabase.class, "dbusuarios").allowMainThreadQueries().build();
+                AppDatabase db = AppDatabase.getInstance(MainActivity.this);
+                UsuarioRepository repository = new UsuarioRepositoryImpl(db.usuariosDao());
 
                 String nombre = etNombre.getText().toString();
                 String apellidos = etApellidos.getText().toString();
                 String direccion = etDireccion.getText().toString();
 
                 //validar campos vacios
-                if (nombre.trim().isEmpty()){
+                if (nombre.trim().isEmpty()) {
                     etNombre.setError("Ingrese el nombre");
-                }else if (apellidos.trim().isEmpty()){
+                } else if (apellidos.trim().isEmpty()) {
                     etApellidos.setError("Ingrese el apellido");
-                }else if (direccion.trim().isEmpty()){
+                } else if (direccion.trim().isEmpty()) {
                     etDireccion.setError("Ingrese la dirección");
-                }else {
+                } else {
 
                     //Usuarios usuarios = new Usuarios(nombre, apellidos, direccion);
                     Usuarios usuarios = new Usuarios();
@@ -55,12 +59,13 @@ public class MainActivity extends AppCompatActivity {
                     usuarios.setNombre(nombre);
                     usuarios.setApellidos(apellidos);
                     usuarios.setDireccion(direccion);
-                    Long result = db.usuariosDao().insert(usuarios);
-                    if (result > 0) {
-                        Toast.makeText(MainActivity.this, "Se realizo el registro", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this, ListaUsuariosActivity.class);
-                        startActivity(intent);
-                    }
+
+                    repository.insertUsuario(usuarios);
+
+                    Toast.makeText(MainActivity.this, "Se realizó el registro", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, ListaUsuariosActivity.class);
+                    startActivity(intent);
+
                 }
 
             }

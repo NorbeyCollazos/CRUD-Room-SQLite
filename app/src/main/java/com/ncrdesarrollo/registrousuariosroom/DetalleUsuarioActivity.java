@@ -10,6 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ncrdesarrollo.registrousuariosroom.database.AppDatabase;
+import com.ncrdesarrollo.registrousuariosroom.database.entity.Usuarios;
+import com.ncrdesarrollo.registrousuariosroom.repository.UsuarioRepository;
+import com.ncrdesarrollo.registrousuariosroom.repository.UsuarioRepositoryImpl;
+
 public class DetalleUsuarioActivity extends AppCompatActivity {
 
     private int id;
@@ -30,10 +35,10 @@ public class DetalleUsuarioActivity extends AppCompatActivity {
         }
 
         //se realiza la consulta a la base de datos
-        AppDatabase db = Room.databaseBuilder(DetalleUsuarioActivity.this,
-                AppDatabase.class, "dbusuarios").allowMainThreadQueries().build();
+        AppDatabase db = AppDatabase.getInstance(DetalleUsuarioActivity.this);
+        UsuarioRepository repository = new UsuarioRepositoryImpl(db.usuariosDao());
 
-        Usuarios usuario = db.usuariosDao().findById(id);
+        Usuarios usuario = repository.finById(id);
         String nombre = usuario.getNombre();
         String apellidos = usuario.getApellidos();
         String direccion = usuario.getDireccion();
@@ -69,7 +74,7 @@ public class DetalleUsuarioActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Usuarios usuarios = new Usuarios();
                 usuarios.setId(id);
-                db.usuariosDao().deleteUser(usuarios);
+                repository.deteleUsuario(usuarios);
                 Toast.makeText(DetalleUsuarioActivity.this, "Se eliminó el usuario", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(DetalleUsuarioActivity.this, ListaUsuariosActivity.class);
                 startActivity(intent);
