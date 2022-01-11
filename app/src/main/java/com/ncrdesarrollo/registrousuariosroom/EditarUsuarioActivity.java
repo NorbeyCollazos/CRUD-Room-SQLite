@@ -48,14 +48,17 @@ public class EditarUsuarioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                    AppDatabase db = Room.databaseBuilder(EditarUsuarioActivity.this,
-                            AppDatabase.class, "dbusuarios").allowMainThreadQueries().build();
+                    AppDatabase db = AppDatabase.getInstance(EditarUsuarioActivity.this);
+
+                    String snombre = etNombre.getText().toString();
+                    String sapellidos = etApellidos.getText().toString();
+                    String sdireccion = etDireccion.getText().toString();
 
                     Usuarios usuarios = new Usuarios();
                     usuarios.setId(id);
-                    usuarios.setNombre(nombre);
-                    usuarios.setApellidos(apellidos);
-                    usuarios.setDireccion(direccion);
+                    usuarios.setNombre(snombre);
+                    usuarios.setApellidos(sapellidos);
+                    usuarios.setDireccion(sdireccion);
 
                     db.usuariosDao().updateUser(usuarios);
 

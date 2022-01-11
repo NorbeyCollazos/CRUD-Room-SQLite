@@ -33,8 +33,7 @@ public class MainActivity extends AppCompatActivity {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppDatabase db = Room.databaseBuilder(MainActivity.this,
-                        AppDatabase.class, "dbusuarios").allowMainThreadQueries().build();
+                AppDatabase db = AppDatabase.getInstance(MainActivity.this);
 
                 String nombre = etNombre.getText().toString();
                 String apellidos = etApellidos.getText().toString();

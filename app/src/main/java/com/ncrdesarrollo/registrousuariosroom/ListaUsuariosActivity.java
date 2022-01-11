@@ -23,8 +23,7 @@ public class ListaUsuariosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_usuarios);
 
-        AppDatabase db = Room.databaseBuilder(ListaUsuariosActivity.this,
-                AppDatabase.class, "dbusuarios").allowMainThreadQueries().build();
+        AppDatabase db = AppDatabase.getInstance(ListaUsuariosActivity.this);
 
         arrayList = db.usuariosDao().getAll();
 

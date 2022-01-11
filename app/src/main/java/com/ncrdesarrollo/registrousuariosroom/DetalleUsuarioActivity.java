@@ -30,8 +30,7 @@ public class DetalleUsuarioActivity extends AppCompatActivity {
         }
 
         //se realiza la consulta a la base de datos
-        AppDatabase db = Room.databaseBuilder(DetalleUsuarioActivity.this,
-                AppDatabase.class, "dbusuarios").allowMainThreadQueries().build();
+        AppDatabase db = AppDatabase.getInstance(DetalleUsuarioActivity.this);
 
         Usuarios usuario = db.usuariosDao().findById(id);
         String nombre = usuario.getNombre();
